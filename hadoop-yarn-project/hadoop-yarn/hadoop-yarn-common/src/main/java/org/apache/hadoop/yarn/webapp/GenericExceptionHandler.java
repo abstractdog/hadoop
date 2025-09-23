@@ -92,21 +92,13 @@ public class GenericExceptionHandler implements ExceptionMapper<Exception> {
     } else if (e instanceof WebApplicationException
         && e.getCause() instanceof UnmarshalException) {
       s = Response.Status.BAD_REQUEST;
-    } else if (e instanceof NotAcceptableException) {
-      s = Response.Status.NOT_ACCEPTABLE;
     } else {
       LOG.warn("SERVICE_UNAVAILABLE", e);
       s = Response.Status.SERVICE_UNAVAILABLE;
     }
 
-    // let jaxb handle marshalling data out in the same format requested
-    String errorMessage = e.getMessage();
-    Throwable cause = e.getCause();
-    if (cause != null) {
-      errorMessage = cause.getMessage();
-    }
     RemoteExceptionData exception = new RemoteExceptionData(e.getClass().getSimpleName(),
-        errorMessage, e.getClass().getName());
+      e.getMessage(), e.getClass().getName());
     return Response.status(s).entity(exception).build();
   }
 }
