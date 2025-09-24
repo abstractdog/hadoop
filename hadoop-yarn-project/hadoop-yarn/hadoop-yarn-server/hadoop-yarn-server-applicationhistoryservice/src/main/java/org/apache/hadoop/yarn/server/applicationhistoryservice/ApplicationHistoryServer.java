@@ -368,6 +368,7 @@ public class ApplicationHistoryServer extends CompositeService {
     config.register(new JerseyBinder());
     config.register(GenericExceptionHandler.class);
     config.register(new JettisonFeature()).register(YarnJacksonJaxbJsonProvider.class);
+    config.property(org.glassfish.jersey.server.ServerProperties.WADL_FEATURE_DISABLE, true);
     return config;
   }
 
