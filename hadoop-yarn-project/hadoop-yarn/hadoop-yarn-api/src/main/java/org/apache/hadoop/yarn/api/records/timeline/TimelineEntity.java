@@ -184,8 +184,11 @@ public class TimelineEntity implements Comparable<TimelineEntity> {
   // Required by JAXB
   @Private
   @XmlElement(name = "relatedentities")
-  public HashMap<String, Set<String>> getRelatedEntitiesJAXB() {
-    return relatedEntities;
+  public HashMap<String, HashSet<String>> getRelatedEntitiesJAXB() {
+    return relatedEntities.entrySet().stream()
+            .collect(HashMap::new,
+                    (m, e) -> m.put(e.getKey(), new HashSet<>(e.getValue())),
+                    HashMap::putAll);
   }
 
   /**
@@ -248,8 +251,11 @@ public class TimelineEntity implements Comparable<TimelineEntity> {
   // Required by JAXB
   @Private
   @XmlElement(name = "primaryfilters")
-  public HashMap<String, Set<Object>> getPrimaryFiltersJAXB() {
-    return primaryFilters;
+  public HashMap<String, HashSet<Object>> getPrimaryFiltersJAXB() {
+      return primaryFilters.entrySet().stream()
+              .collect(HashMap::new,
+                      (m, e) -> m.put(e.getKey(), new HashSet<>(e.getValue())),
+                      HashMap::putAll);
   }
 
   /**
