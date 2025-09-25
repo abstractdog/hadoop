@@ -92,10 +92,6 @@ public final class ContextFactory {
   public static JAXBContext createContext(Class[] classes,
       Map<String, Object> properties) throws Exception {
     for (Class c : classes) {
-      if (IGNORE_SET.contains(c)) {
-        je.setStackTrace(stackTrace);
-        throw je;
-      }
       if (!CLASS_SET.contains(c)) {
         try {
           return newContext(classes, properties);
